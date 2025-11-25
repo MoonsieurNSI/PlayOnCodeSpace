@@ -6,3 +6,13 @@
 >
 > donc on oublie `ping`, `traceroute`...<br>
 > mais `curl` rules the world ! 
+
+-----------------
+
+> [WARNING]
+> On installe un *environnement virtuel pour python* pour run les ipynb !
+> ```bash
+>   sudo apt-get update
+>   sudo apt-get install -y python3.11-venv
+>   source venv/bin/activate
+>   pip install ipykernel
