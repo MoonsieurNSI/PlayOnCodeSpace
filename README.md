@@ -16,3 +16,8 @@
 >   sudo apt-get install -y python3.11-venv
 >   source venv/bin/activate
 >   pip install ipykernel
+
+---------------------
+
+> [!WARNING]
+> On peut préparer le mardown pour [jupyter](./ipynb/tuto.md)
