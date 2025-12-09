@@ -1,0 +1,5 @@
+
+mkdir essai
+cd essai
+touch essai.log
+pwd
