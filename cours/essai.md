@@ -1,5 +1,6 @@
 #### Rappels de 1ere NSI-
-  | Commande | Exemple d'utilisation | Explication |
+
+    | Commande | Exemple d'utilisation | Explication |
     | :----: | :----: | :---- |
     | **`cat`** | `cat file.txt` | Affiche tout le contenu d'un fichier. |
     | **`cd`** | `cd /home` | **C**hange **D**irectory : navigue vers le dossier indiqué. |
