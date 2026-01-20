@@ -43,3 +43,14 @@ SELECT nom, espece, naissance FROM animal
 WHERE proID=1
 ORDER BY naissance DESC, nom; 
 --pour nommer WINDOWS avant lINUX on ajoute DESC après nom
+
+SELECT nom, espece, naissance FROM animal
+WHERE espece='chien'
+ORDER BY naissance DESC
+LIMIT 2
+OFFSET 1;
+
+SELECT DISTINCT naissance FROM animal;
+
+SELECT DISTINCT espece FROM animal;
+SELECT DISTINCT espece FROM animal ORDER BY espece;
