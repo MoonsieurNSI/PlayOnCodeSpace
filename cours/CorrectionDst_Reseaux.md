@@ -177,10 +177,10 @@ Le tableau précédent est obtenu grâce à l'algorithme glouton de Dijsktra. Le
 ### Question 12
 |Destination|Suivant|Explication|
 |:---:|:---:|:---|
-|R1|R1|Liaison directe|
-|R2||Pas de routage|
-|R3|R3|Liaison directe|
-|R4|R5|R2→R5→R6→R4 (FE+F+F=14)|
-|R5|R5|Liaison directe|
-|R6|R5|R2→R5→R6 (FE+F=12)|
-|R7|R5|R2→R5→R6→R4→R7 (FE+F+F+F=16)|
+|R1|||
+|R2|||
+|R3|||
+|R4|||
+|R5|||
+|R6|||
+|R7|||
