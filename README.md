@@ -23,3 +23,6 @@
 > On peut préparer le mardown pour [jupyter](./boulot/term/ipynb/tuto.md)
 
 # Idéallement on lance le VE
+
+## Enregistrer session psql
+sudo -i -u postgres psql -a -L /tmp/session.log
