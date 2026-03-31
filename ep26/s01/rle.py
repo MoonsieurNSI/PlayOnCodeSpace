@@ -82,11 +82,13 @@ def encoder_decoder_image(nom_image):
 
 
 
-#test
+#tests
 #q1
 print(codage_rle([0]))
 # output : [1, 0] => len([1, 0]) > len([0])
+# donc la liste obtenue n'est pas forcément de longueur inférieure
 
 #q2
 print(decodage_rle([1, 0]))
 test_codage()
+
