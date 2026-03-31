@@ -13,5 +13,5 @@
   // this command will run immediately without asking for a password.
   "postStartCommand": "sudo service postgresql start",
   // Add the source command to .bashrc ONCE during creation of the container
-  "postCreateCommand": "echo 'source $PWD/.venv/bin/activate' >> ~/.bashrc"
+  "postCreateCommand": "python3 -m venv .venv && .venv/bin/pip install --upgrade pip ipykernel && echo 'source $PWD/.venv/bin/activate' >> ~/.bashrc"
 }
