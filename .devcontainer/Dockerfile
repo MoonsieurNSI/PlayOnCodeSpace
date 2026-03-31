@@ -17,3 +17,10 @@ RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode \
 RUN sed -i 's/local\s*all\s*postgres\s*peer/local all postgres trust/g' /etc/postgresql/*/main/pg_hba.conf \
     && sed -i 's/local\s*all\s*all\s*peer/local all all trust/g' /etc/postgresql/*/main/pg_hba.conf \
     && sed -i 's/host\s*all\s*all\s*127.0.0.1\/32\s*scram-sha-256/host all all 127.0.0.1\/32 trust/g' /etc/postgresql/*/main/pg_hba.conf
+
+
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends \
+        postgresql postgresql-contrib \
+        git-lfs asciinema \
+        python3 python3.11-venv python3-pip
