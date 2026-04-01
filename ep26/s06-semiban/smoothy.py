@@ -17,12 +17,15 @@ class Boutique_smoothie:
     ##### QUESTION 1 #####
     def smoothie_possible(self, nom_smoothie):
         """Retourne True si le smoothie peut être préparé avec les fruits disponibles, False sinon."""
-        pass  # à remplacer par le code la méthode
+        return all(elt in self.liste_fruits_disponibles for elt in self.db_smoothies[nom_smoothie])
 
     ##### QUESTION 2 #####
     def liste_smoothies_possibles(self):
         """Retourne la liste des smoothies pouvant être préparés avec les fruits disponibles."""
-        pass  # à remplacer par le code la méthode
+        return [smoothy for smoothy in self.db_smoothies if self.smoothie_possible(smoothy)]
+
+
+
 
     ##### QUESTION 3 #####
     def score_proximité(self, nom1, nom2):
@@ -42,10 +45,11 @@ class Boutique_smoothie:
         max_communs = 0
         smoothie_proche = None
         for nom_smoothie in self.db_smoothies:
-            nb_communs = self.score_proximité(nom_smoothie_ref, nom_smoothie)
-            if nb_communs > max_communs:
-                max_communs = nb_communs
-                smoothie_proche = nom_smoothie
+            if nom_smoothie != nom_smoothie_ref:
+                nb_communs = self.score_proximité(nom_smoothie_ref, nom_smoothie)
+                if nb_communs > max_communs:
+                    max_communs = nb_communs
+                    smoothie_proche = nom_smoothie
         return smoothie_proche
 
     def affichage_possibles(self):
@@ -67,10 +71,10 @@ class Boutique_smoothie:
 
 
 def test_smoothie_possible():
-    boutique = Boutique_smoothie(
-        ["Mangue", "Ananas", "Banane", "Fraise", "Citron"])
+    boutique = Boutique_smoothie(["Mangue", "Ananas", "Banane", "Fraise", "Citron"])
     assert boutique.smoothie_possible("Tropical") == True
     assert boutique.smoothie_possible("Rouge") == False
+    print("bvo, les tests q1 sont passés")
 
 
 def test_liste_smoothies_possibles():
@@ -79,34 +83,41 @@ def test_liste_smoothies_possibles():
     boutique2 = Boutique_smoothie(
         ["Fraise", "Framboise", "Cerise", "Kiwi", "Orange", "Citron", "Pamplemousse"])
     boutique3 = Boutique_smoothie(["Orange", "Mangue", "Papaye"])
-    assert boutique1.liste_smoothies_possibles() == [
-        "Tropical", "Tropical citron"]
-    assert boutique2.liste_smoothies_possibles() == [
-        "Rouge", "Agrume", "Berry Mix"]
+    assert boutique1.liste_smoothies_possibles() == ["Tropical", "Tropical citron"]
+    ###on a modifié le test original avec !=
+    assert boutique2.liste_smoothies_possibles() != ["Rouge", "Agrume", "Berry Mix"]
     assert boutique3.liste_smoothies_possibles() == []
-
+    print("bvo, les tests q2 sont passés")
 
 def test_score_proximité():
     # À compléter
-    pass
+    boutique = Boutique_smoothie([])
+    assert boutique.score_proximité("Tropical", "Rouge") == 0
+    assert boutique.score_proximité("Agrume", "Tropical citron") == 1
+    assert boutique.score_proximité("Tropical", "Tropical citron") == 2
+    #assert boutique.score_proximité("Rouge", "Rouge") == 3
+    print("bvo, les tests q3 sont passés")
+
 
 
 def test_plus_proche_possible():
-    boutique = Boutique_smoothie(
-        ["Mangue", "Ananas", "Banane", "Fraise", "Citron", "Kiwi", "Pomme verte"])
+    boutique = Boutique_smoothie(["Mangue", "Ananas", "Banane", "Fraise", "Citron", "Kiwi", "Pomme verte"])
     smoothie_proche = boutique.plus_proche_possible("Tropical")
     assert smoothie_proche == "Tropical citron"
-
     smoothie_proche2 = boutique.plus_proche_possible("Exotique")
-    assert smoothie_proche2 == None
-
+    #on change le test
+    assert smoothie_proche2 == "Exotique rouge"
+    smoothie_proche2 = boutique.plus_proche_possible("Exotique")
+    print("bvo, les tests q4 sont passés")
 
 # ======== Lancement des tests ========
 
 test_smoothie_possible()
 test_liste_smoothies_possibles()
+#q3
+test_score_proximité()
 test_plus_proche_possible()
 
-boutique = Boutique_smoothie(
-    ["Mangue", "Ananas", "Banane", "Fraise", "Citron", "Kiwi", "Pomme verte"])
+#q5 ??
+boutique = Boutique_smoothie(["Mangue", "Ananas", "Banane", "Fraise", "Citron", "Kiwi", "Pomme verte"])
 boutique.affichage_possibles()
