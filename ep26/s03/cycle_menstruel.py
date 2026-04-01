@@ -3,12 +3,23 @@ import calendar
 #############################################################################
 # Écrire le code de la fonction est_bissextile de la question 1             #
 #############################################################################
-
+def est_bissextile(annee):
+    """retourne True si annee est bissextile et False sinon"""
+    assert type(annee) == int
+    return annee % 400 == 0 or (annee % 4 == 0 and annee % 100 != 0)
 
 #############################################################################
 # Écrire le code de la fonction determiner_phase de la question 2           #
 #############################################################################
-
+def determiner_phase(j):
+    """
+    retourne le numero de la phase correspondant à j
+    """
+    assert type(j) == int and 1 <= j <= 28
+    phase = {1 : range(1, 6), 2 : range(6,14), 3: range(14,15), 4: range(15,29)}
+    for num, plage in phase.items():
+        if j in plage:
+            return num
 
 #############################################################################
 # Fonctions fournies pour la question 3                                     #
@@ -41,7 +52,18 @@ def ajouter_jours(date, nb_jours):
 
 def test_ajouter_jours():
     assert ajouter_jours((7, 9, 2025), 3) == (10, 9, 2025)
-    
+    #ajout dans le même mois la même année
+    assert ajouter_jours((1, 1, 2026), 30)   == (31, 1, 2026)
+    #ajout la même année avec changement de mois
+    assert ajouter_jours((1, 1, 2026), 31)   == (1, 2, 2026)
+    #ajout sur une année non bissextile
+    assert ajouter_jours((1, 2, 2026), 28)   == (1, 3, 2026)
+    #ajout sur une année bissextile
+    assert ajouter_jours((1, 2, 2028), 28)   == (29, 2, 2028)
+    #ajout d'une année non bissextile vers année bissextile
+    assert ajouter_jours((28, 2, 2027), 366) == (29, 2, 2028)
+    print("bvo, les tests q3 sont passés")
+
 #############################################################################
 # Fonction fournie pour la question 4                                       #
 #############################################################################
@@ -62,7 +84,7 @@ def calendrier_cycles(date_regles):
         jour, mois, annee = date_courante  
         cal_lignes.append('BEGIN:VEVENT')
         cal_lignes.append('SUMMARY: Règles')
-        date = str(annee)+str(mois)+str(jour)
+        date = str(annee)+f'{mois:02d}'+ f'{jour:02d}'
         cal_lignes.append('DTSTART:'+date)
         cal_lignes.append('END:VEVENT')
         date_courante = ajouter_jours(date_courante, 28)
@@ -85,3 +107,41 @@ def test_calendrier_cycles():
     print(c)
     cal = Calendar(c)
     print(cal.events)
+
+#q1
+assert est_bissextile(2000)
+assert est_bissextile(2024)
+assert not est_bissextile(2026)
+assert not est_bissextile(2100)
+print("bvo, les tests q1 sont passés")
+
+#q2
+assert determiner_phase(1)  == 1
+assert determiner_phase(6)  == 2
+assert determiner_phase(14) == 3
+assert determiner_phase(20) == 4
+print("bvo, les tests q2 sont passés")
+
+#q3
+test_ajouter_jours()
+
+#q4
+test_calendrier_cycles()
+
+############### output :
+# SUMMARY: Règles
+# DTSTART:202649
+# END:VEVENT
+# BEGIN:VEVENT
+# SUMMARY: Règles
+# DTSTART:202657
+# END:VEVENT
+# END:VCALENDAR
+# .........
+# ValueError: month must be in 1..12
+
+# On note une ValueError et le print() de la ligne 107 affiche deux dates
+# qui ne respecte pas le format sur AAAAMMJJ car il manque des 0.
+# la chaine 'date' est construite ligne 87 : date = str(annee)+str(mois)+str(jour)
+# une f-string règle le problème avec le formatage :02d
+# affiche des nombres entiers décimaux sur deux caractères et place un 0 devant si besoin

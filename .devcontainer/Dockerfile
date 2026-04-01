@@ -24,3 +24,4 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
         postgresql postgresql-contrib \
         git-lfs asciinema \
         python3 python3.11-venv python3-pip
+
