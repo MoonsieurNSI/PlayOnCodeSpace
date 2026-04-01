@@ -26,25 +26,59 @@ def est_dictionnaire(objet):
 
 ### Première fonction à implémenter après avoir découvert le fichier JSON agrégé
 ### Cf fichier `empreinte_ada_agr.json`
+# q1
 def total_simple(empreinte):
     """Fonction qui renvoie l'empreinte carbone totale d'un dictionnaire associant
     une empreinte carbone à des noms de catégories"""
-    pass
+    assert isinstance(empreinte, dict), "on veut du dico"
+    return sum(empreinte.values())
 
+#test
+emp = chargement_json('empreinte_ada_agr.json')
+print(total_simple(emp))
 
 ### Deuxième fonction : il faut la récursivité pour le cas des sous-catégories
 ### Cf fichier `empreinte_ada.json`
 def total_rec(empreinte):
     """Fonction récursive qui renvoie l'empreinte carbone totale représentée
     par un dictionnaire dont les valeurs peuvent aussi être des dictionnaires"""
-    pass
-
+    total = 0
+    for cle in empreinte:
+        if not est_dictionnaire(empreinte[cle]):
+            total += empreinte[cle]
+        else:
+            total += total_rec(empreinte[cle])
+    return total
 
 def test_total_rec():
     test_dico1 = {"a": 1, "d": 2}
     assert total_rec(test_dico1) == 3
     test_dico2 = {"a": {"b": 1, "c": 2}, "d": {"e": 3}}
     assert total_rec(test_dico2) == 6
+    #ajout
+    test_dico3 = {"Logement": {
+                    "Energie": {
+                        "Cuisson": 105,
+                        "Chauffage individuel": 1500
+                                },
+                    "Construction": 650,
+                    "Location": 37,
+                    "Ameublement": 162
+                },
+                "Alimentation": {
+                    "Repas": {
+                        "Viande": {
+                            "Blanche": 296,
+                            "Rouge": 814
+                            },
+                        "Autre": 97
+                    },
+                    "Déchets": 152,
+                    "Boisson": 141
+                }
+            }
+    assert total_rec(test_dico3) == 3954
+    print("bvo, les tests q2 sont passés")
 
 # ==========================================
 # Fonction à analyser et corriger (Question 3)
@@ -62,4 +96,11 @@ def alerte_valeur_aberrante(empreinte, limite):
             if valeur > limite:
                 return True
     return False
+
+#q2
+test_total_rec()
+
+#q3
+emp = chargement_json('empreinte_ada.json')
+print(alerte_valeur_aberrante(emp, 1000))
 
