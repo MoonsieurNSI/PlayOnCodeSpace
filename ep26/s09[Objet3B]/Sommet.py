@@ -32,9 +32,18 @@ class Sommet:
 #############################################################################
 # Écrire le code de la méthode distance de la question 1                    #
 #############################################################################
-
+    def distance(self, s):
+        """
+        retroune la distance entre deux sommets
+        """
+        assert isinstance(s, Sommet)
+        return math.sqrt((self.x - s.x)**2 + (self.y - s.y)**2 + (self.z - s.z)**2)
 #############################################################################
 # Programme pour tester votre méthode de la question 1                                  #
 #############################################################################
 s1 = Sommet(0, 0, 0)
 s2 = Sommet(3, 4, 0)
+
+#test
+assert s1.distance(s2) == 5.0
+print("bvo, le test q1 est passé")
