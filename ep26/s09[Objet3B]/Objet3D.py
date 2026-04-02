@@ -70,7 +70,15 @@ class Objet3D:
 #############################################################################
 # Écrire le code de la méthode trouver_sommets_adjacents de la question 2   #
 #############################################################################
-
+    def trouver_sommets_adjacents(self):
+        n = len(self.sommets)
+        for i in range(n):
+            sommet_courant = self.sommets[i]
+            for j in range(i + 1, n):
+                sommet_compare = self.sommet[j]
+                if sommet_courant.est_adjascent(sommet_compare):
+                    return sommet_courant, sommet_compare
+        return None
 
 #############################################################################
 # Programme pour tester votre méthode de la question 2                                  #
@@ -80,3 +88,4 @@ objet.ajouter_sommet(0, 0, 0)  # s1
 objet.ajouter_sommet(1, 0, 0)  # s2
 objet.ajouter_sommet(0, 1, 0)  # s3
 objet.ajouter_sommet(0, 0, 1)  # s4
+print(objet.trouver_sommets_adjacents())
