@@ -4,14 +4,17 @@
     "dockerfile": "Dockerfile"
   },
   "customizations": {
-    "vscode": {
-      "extensions": [
-        "cweijan.vscode-postgresql-client2"
-      ]
+  "vscode": {
+    "extensions": [
+      "cweijan.vscode-postgresql-client2",
+      "ms-python.python"
+    ],
+    "settings": {
+      "python.defaultInterpreterPath": "/workspaces/${localWorkspaceFolderBasename}/.venv/bin/python"
     }
-  },
+  }
+},
   // this command will run immediately without asking for a password.
-  "postStartCommand": "sudo service postgresql start",
-  // Add the source command to .bashrc ONCE during creation of the container
-  "postCreateCommand": "python3 -m venv .venv && .venv/bin/pip install --upgrade pip ipykernel && .venv/bin/pip install -r requirements.txt && echo 'source $PWD/.venv/bin/activate' >> ~/.bashrc"
+"postStartCommand": "sudo service postgresql start && echo 'source /workspaces/${localWorkspaceFolderBasename}/.venv/bin/activate' >> ~/.bashrc",
+"postCreateCommand": "python3 -m venv .venv && .venv/bin/pip install --upgrade pip ipykernel && .venv/bin/pip install -r requirements.txt"
 }

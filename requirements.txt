@@ -12,7 +12,6 @@ jupyter_client==8.6.3
 jupyter_core==5.9.1
 matplotlib-inline==0.2.1
 matplotlib
-mpl_toolkits.mplot3d.art3d
 nest-asyncio==1.6.0
 packaging==25.0
 parso==0.8.5

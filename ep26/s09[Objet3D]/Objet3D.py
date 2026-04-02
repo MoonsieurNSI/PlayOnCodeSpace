@@ -51,32 +51,41 @@ class Objet3D:
             f.append(x)
         mesh = Poly3DCollection(f, alpha=0.4, edgecolor='black')
         ax.add_collection3d(mesh)
-        plt.show()
+        # plt.show()
+        plt.savefig('./ep26/s09[Objet3D]/pyramide.png')
 
 #############################################################################
 # Méthode à modifier de la question 5                                       #
 #############################################################################
     def transformer(self, rapport):
         """
-        Applique une transformation d'échelle à l'objet 3D en modifiant directement ses sommets.
+        Applique une transformation d'échelle à l'objet 3D en renvoyant un nouvel
+        objet résultant de la transformation, sans modifier l'instance d'origine.
         """
         sommets = []
         for sommet in self.sommets:
             sommets.append(
                 Sommet(sommet.x*rapport, sommet.y*rapport, sommet.z*rapport))
-        self.sommet = sommets
+        obj = Objet3D()
+        obj.sommets = sommets
+        obj.faces = self.faces
+        obj.nom = self.nom + "*" + str(rapport)
+        return obj
 
 
 #############################################################################
 # Écrire le code de la méthode trouver_sommets_adjacents de la question 2   #
 #############################################################################
     def trouver_sommets_adjacents(self):
+        """
+        renvoie le premier couple de sommets adjacents trouvé ou None
+        """
         n = len(self.sommets)
         for i in range(n):
             sommet_courant = self.sommets[i]
             for j in range(i + 1, n):
-                sommet_compare = self.sommet[j]
-                if sommet_courant.est_adjascent(sommet_compare):
+                sommet_compare = self.sommets[j]
+                if sommet_courant.est_adjacent(sommet_compare):
                     return sommet_courant, sommet_compare
         return None
 
