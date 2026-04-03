@@ -1,8 +1,8 @@
 from math import sqrt
 from donnees_habitats import zones_connues
 
-nouveau = {'vegetation': 5, 'proximite_eau': 2, 'densite_urbaine': 4, 'disponibilite_proies': 6}
-
+nouveau0 = {'vegetation': 5, 'proximite_eau': 2, 'densite_urbaine': 4, 'disponibilite_proies': 6, 'presence_renard': 0}
+nouveau1 = {'vegetation': 5, 'proximite_eau': 2, 'densite_urbaine': 4, 'disponibilite_proies': 6, 'presence_renard': 1}
 
 def distance(habitat_1, habitat_2):
     '''
@@ -13,7 +13,18 @@ def distance(habitat_1, habitat_2):
     sortie : 
         - float : distance euclidienne entre habitat_1 et habitat_2.
     '''
-    pass # à remplacer par votre code
+    d = 0
+    for caracteristique in habitat_1:
+        d += (habitat_1[caracteristique] - habitat_2[caracteristique])**2
+    return sqrt(d)
+
+#test
+# q1
+h1 = {'vegetation': 9, 'proximite_eau': 6, 'densite_urbaine': 0,'disponibilite_proies': 4, 'presence_renard': 1}
+h2 = {'vegetation': 10, 'proximite_eau': 5, 'densite_urbaine': 9, 'disponibilite_proies': 10, 'presence_renard': 0}
+print(distance(h1, h2))
+
+
 
 def distance_d_un_habitat(habitat, habitats):
     '''
@@ -24,7 +35,22 @@ def distance_d_un_habitat(habitat, habitats):
     sortie : 
         - list[tuple] : liste de tuples (distance, habitat) où distance est la distance entre habitat et chaque habitat de la liste.
     '''
-    pass # à remplacer par votre code
+    reponse = []
+    for h in habitats:
+        reponse.append((distance(h, habitat), habitat))
+    return reponse
+#test
+# q2 ,q3
+zones_connues = [
+{'vegetation': 9, 'proximite_eau': 6, 'densite_urbaine': 0, 'disponibilite_proies': 4, 'presence_renard': 1},
+{'vegetation': 10, 'proximite_eau': 5, 'densite_urbaine': 9, 'disponibilite_proies': 10, 'presence_renard': 0},
+{'vegetation': 8, 'proximite_eau': 5, 'densite_urbaine': 1, 'disponibilite_proies': 6, 'presence_renard': 0},
+]
+##### ALERTE ERREUR
+##### nouveau ne contient pas la cle 'presence_renard'
+##### on crée nouveau0 et nouveau1 selon que le renard est présent ou pas
+print(distance_d_un_habitat(nouveau0, zones_connues))
+print(distance_d_un_habitat(nouveau1, zones_connues))
 
 def k_plus_proches(k, habitat, habitats):
     '''
@@ -56,8 +82,8 @@ def presence_renard(k, habitat, habitats):
     habitats = k_plus_proches(k, habitat, habitats)
     n_renards = 0
     for habitat in habitats:
-        distance = habitat[0]
+        #distance = habitat[0]
         caracteristiques = habitat[1]
-        if distance['presence_renard'] == 1:
+        if caracteristiques['presence_renard'] == 1:
             n_renards += 1
-    return n_renards > k/2
+    return n_renards >= k/2
