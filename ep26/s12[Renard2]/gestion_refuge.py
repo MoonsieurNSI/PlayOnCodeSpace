@@ -6,10 +6,20 @@ class Renard:
     Attributs : identifiant, nom, poids, date_arrivee.
     """
     def __init__(self, identifiant, nom, poids, date_arrivee):
-        pass # Question 1 à compléter
+        # Question 1 à compléter
+        self.id = identifiant
+        self.nom = nom
+        self.poids = poids
+        self.date_arrivee = date_arrivee
 
     def __str__(self):
-        pass # Question 2 à compléter
+        # Question 2 à compléter
+        return f"Renard ID {self.id} - {self.nom} (Arrivé le {self.date_arrivee})"
+#test
+#q2
+renard1 = Renard(200, "Oscar", 5.1, "2026-01-01")
+print(renard1)
+
 
 class Refuge:
     """
@@ -48,6 +58,15 @@ class Refuge:
         with open(nom_fichier, 'r', encoding='utf-8') as f:
             lignes = csv.DictReader(f, delimiter=';')
             for ligne in lignes:
-                renard = Renard(ligne['id'], ligne['nom'], ligne['poids'], ligne['date_arrivee'])
+                renard = Renard(int(ligne['id']), ligne['nom'], float(ligne['poids']), ligne['date_arrivee'])
                 self.recueillir(renard)
+#q3
+refuge = Refuge("SOS_Goupil", "")
+print(f"{len(refuge.liste_renards)} renard(s) dans le refuge")
+refuge.importer_donnees("./donnees_renard.csv")
+print(f"{len(refuge.liste_renards)} renard(s) dans le refuge")
 
+#q4
+print(f"nombre renards peu corpulents: {len(refuge.lister_peu_corpulents())}")
+print(f"Fraction renards peu corpulents: {refuge.pourcentage_peu_corpulents()}%")
+print(f"{len(refuge.lister_peu_corpulents())/len(refuge.liste_renards) * 100}%")
