@@ -25,7 +25,7 @@ class Piece:
         ''' renvoie le nombre d'occupants restants dans la pièce.
             A FAIRE EN PARTIE 1
         '''
-        pass
+        return sum(map(sum, self.grille))
 
     def ajouter_sortie(self, direction: str, position: int):
         ''' permet d'ajouter des sorties à la pièce.
@@ -231,7 +231,13 @@ def test_choix_sortie():
 
 
 if __name__ == "__main__":
+    p1 = Piece(5, 7)
+    p1.ajouter_occupants(2, 0, 4)
+    p1.ajouter_occupants(3, 4, 1)
+    p1.ajouter_occupants(0, 5, 2)
+    p1.ajouter_sortie("N", 5)
+    #print(p1)
     test_nb_occupants_restants()
-    test_evacuation(False)
-    test_ajouter_sortie()
-    test_choix_sortie()
+    #test_evacuation(False)
+    #test_ajouter_sortie()
+    #test_choix_sortie()
