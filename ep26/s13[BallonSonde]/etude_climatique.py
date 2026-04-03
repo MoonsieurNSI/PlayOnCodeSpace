@@ -33,6 +33,8 @@ def genere_kml(liste_longitudes, liste_latitudes):
     """ Fonction qui génère un fichier de données géographiques au format standard international KML
         Ce fichier est visionnable ensuite dans différents logiciels
     """
+    #q4
+    assert len(liste_latitudes) == len(liste_longitudes)
     fichier_kml = open(
         'ballon sonde.kml', 'w')    # Création et ouverture du fichier kml en mode "write"
     entete_fichier = '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -51,6 +53,7 @@ def genere_kml(liste_longitudes, liste_latitudes):
         fichier_kml.write(corps_fichier)
     bas_fichier = '</Document>\n'
     fichier_kml.write(bas_fichier)
+    fichier_kml.write('</kml>\n') #q6
     fichier_kml.close()                         # Fermeture du fichier kml
 
 
@@ -59,14 +62,34 @@ def genere_kml(liste_longitudes, liste_latitudes):
 # ///////////////////////////////////////////////////////////////////////////
 
 # QUESTION 1
-# Compléter ici
+altitudes, temperatures, longitudes, latitudes = recupere_donnees_fichier_csv("./releves_ballon_sonde.csv")
+print(altitudes)
+print(temperatures)
+print(longitudes)
+print(latitudes)
 
 # QUESTION 2
 def conversion_K_en_C(liste_temperatures):
-    pass # Ajuster la fonction
+    return [round(temperature - 273.15, 1) for temperature in temperatures]
+
+#test
+#q2
+assert conversion_K_en_C(temperatures) == [15.0, 13.7, 11.7, 7.9, 3.4, 0.5, -2.3, -17.7, -28.9, -42.5, -48.3, -56.0, -56.2, -56.5, -56.5, -56.0, -56.1, -53.0, -50.1, -48.0]
+print("bvo, le test q2 est passé")
+
 
 # QUESTION 3
 def altitude_la_plus_froide(liste_altitudes, liste_temperatures):
-    pass # Ajuster la fonction
+    min_temp = min(liste_temperatures)
+    min_alti = [alt for alt, temp in zip(liste_altitudes, liste_temperatures) if temp == min_temp]
+    return min_temp, min_alti
+
+#test
+#q3
+assert altitude_la_plus_froide([7000, 10125, 13896, 14211], [-35.2, -52.1, -57.4, -57.4]) == (-57.4, [13896, 14211])
+assert altitude_la_plus_froide([6000, 7250, 11542, 15214, 17300], [-33.7, -45, -53, -58.5, -60.1]) == (-60.1, [17300])
+print("bvo, les tests q3 sont passés") 
 
 # AUTRES ELEMENTS DE CODE
+#q5
+genere_kml(longitudes, latitudes)
