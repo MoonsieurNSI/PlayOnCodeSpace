@@ -35,6 +35,10 @@ class Piece:
             self.sorties.append((0, position))
         elif direction == "O":
             self.sorties.append((position, 0))
+        elif direction == "S":
+            self.sorties.append((self.i_max, position))
+        elif direction == "E":
+            self.sorties.append((position, self.j_max))
 
     def choix_sortie(self, i: int, j: int) -> tuple:
         ''' renvoie la sortie à utiliser pour une personne positionnée sur la ligne i et la colonne j.
@@ -49,7 +53,8 @@ class Piece:
         distance = distance_de_manhattan(choix)
         for k in range(1, len(self.sorties)):
             autre_sortie = self.sorties[k]
-            if k < 0:
+            d2 = distance_de_manhattan(autre_sortie)
+            if d2 < distance:
                 choix = autre_sortie
                 distance = d2
         return choix
@@ -148,7 +153,13 @@ def evacuation(p: Piece, silencieux: bool = True) -> int:
         l'état de la pièce à chaque tour est affiché dans la console.
         A FAIRE EN PARTIE 1
     '''
-    pass
+    tour = 0
+    while p.nb_occupants_restants() > 0:
+        p.alerter()
+        tour += 1
+    return tour
+    
+    
 
 
 def test_nb_occupants_restants():
@@ -236,8 +247,8 @@ if __name__ == "__main__":
     p1.ajouter_occupants(3, 4, 1)
     p1.ajouter_occupants(0, 5, 2)
     p1.ajouter_sortie("N", 5)
-    #print(p1)
+    print(p1)
     test_nb_occupants_restants()
-    #test_evacuation(False)
-    #test_ajouter_sortie()
-    #test_choix_sortie()
+    test_evacuation(False)
+    test_ajouter_sortie()
+    test_choix_sortie()

@@ -23,5 +23,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
         postgresql postgresql-contrib \
         git-lfs asciinema \
-        python3 python3.11-venv python3-pip
+        python3 python3.11-venv python3-pip \
+        python3-tk \
+        xvfb x11vnc xterm
 
