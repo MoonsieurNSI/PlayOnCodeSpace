@@ -27,6 +27,23 @@ datas_temperature = charger("datas.csv")
 #############################################################################
 
 # Écrire la fonction ecart_temperature et ses tests ici
+def ecart_temperature(datas, annee):
+    """
+    renvoie l'écart de température correspondant à 'annee'
+    """
+    assert type(datas) == list and type(annee) == int
+    assert all(type(elt) == dict for elt in datas)
+    for data in datas:
+        if data['année'] == annee:
+            return data['écart']
+    return None
+
+#test
+#q1
+assert ecart_temperature(datas_temperature, 2025) == 1.29 
+assert ecart_temperature(datas_temperature, 1906) == -0.25
+assert ecart_temperature(datas_temperature, 2026) is None
+print("bvo, les test q1 sont passés")
 
 
 def derniere_annee_ecart_negatif(datas):
@@ -41,6 +58,10 @@ def derniere_annee_ecart_negatif(datas):
 #############################################################################
 # Question 2 : Analyse et correction de bug                                 #
 #############################################################################
+#test
+#q2
+print(derniere_annee_ecart_negatif(datas_temperature))
+
 
 def moyenne_ecarts(annee_debut, annee_fin, datas):
     """
@@ -51,7 +72,7 @@ def moyenne_ecarts(annee_debut, annee_fin, datas):
     compteur = 0
     for dico in datas:
         if annee_debut <= dico["année"] and dico["année"] <= annee_fin:
-            somme = somme - dico["écart"]
+            somme = somme + dico["écart"]
             compteur += 1
     return somme / compteur
 
@@ -81,12 +102,15 @@ def prevision(datas, annee, n):
 
     return a * annee + b
 
-# print("Prévision pour 2040 :", prevision(datas_temperature, 2040, 20))
-
+print("Prévision pour 2040 :", prevision(datas_temperature, 2040, 20))
+# q3
+# Prévision pour 2040 : 1.56657894736842
 
 #############################################################################
 # Question 3 : Dataviz (Warming Stripes)                                    #
 #############################################################################
+
+
 
 def graphique(datas):
     """
@@ -101,8 +125,8 @@ def graphique(datas):
     norm = plt.Normalize(-max_val, max_val)
 
     # Création des listes pour les abscisses et ordonnées
-    annees = []
-    ordonnees = []
+    annees = [data['année'] for data in datas]
+    ordonnees = [1] * len(annees)
 
     # Remplir les listes annees et ordonnees ici :
 
@@ -113,6 +137,7 @@ def graphique(datas):
     ax.set_xlabel("Année")
 
     plt.tight_layout()
-    plt.show()
+    #plt.show()
+    plt.savefig('WS.png')
 
-# graphique(datas_temperature)
+graphique(datas_temperature)
